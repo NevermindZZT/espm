@@ -143,21 +143,23 @@ def getPackages(source=None):
     packages = None
     if source.startswith("http"):
         try:
-            res = requests.get(source)
+            headers={"User-Agent": "Microsoft-WNS/10.0"}
+            res = requests.get(source, headers=headers)
             if res.status_code == 200:
                 sourceInfo = res.json()
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
     elif os.path.isfile(source):
         with open(source, 'r') as f:
             sourceInfo = json.loads(f.read())
     
-    if 'packages' in sourceInfo:
-        packages = sourceInfo['packages']
+    if sourceInfo:
+        if 'packages' in sourceInfo:
+            packages = sourceInfo['packages']
 
-    if 'sources' in sourceInfo:
-        for item in sourceInfo['sources']:
-            packages = packages + getPackages[item]
+        if 'sources' in sourceInfo:
+            for item in sourceInfo['sources']:
+                packages = packages + getPackages[item]
 
     return packages
 
