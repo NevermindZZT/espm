@@ -34,7 +34,8 @@ def listPackages():
     names = os.listdir(packagesDir)
     for name in names:
         packageInfo = getPackageInfo(name)
-        print("%-24s    %s"%(name, packageInfo['version']))
+        version = packageInfo['version'] if packageInfo  else "unknow"
+        print("%-24s    %s"%(name, version))
 
 def install(packageName, source=None):
     """
@@ -121,9 +122,9 @@ def getPackageInfo(packageName):
                     packageInfo['src'] = package['src']
                 if not 'inc' in packageInfo and 'inc' in package:
                     packageInfo['inc'] = package['inc']
-            if not 'version' in packageInfo:
-                packageInfo['version'] = "unknow"
-    
+                if not 'version' in packageInfo:
+                    packageInfo['version'] = "unknow"
+
     return packageInfo
                         
 
