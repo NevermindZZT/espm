@@ -1,0 +1,31 @@
+{
+    "version": "v0.0.1",
+    "name": "espm packages",
+    "packages": [
+        {
+            "name": "letter-shell",
+            "url": "https://github.com/NevermindZZT/letter-shell",
+            "type": "git",
+            "src": [
+                "src"
+            ],
+            "inc": [
+                "src"
+            ]
+        },
+        {
+            "name": "cson",
+            "url": "https://github.com/NevermindZZT/cson",
+            "type": "git",
+            "src": [
+                "src"
+            ],
+            "inc": [
+                "src"
+            ]
+        }
+    ],
+    "sources": [
+
+    ]
+}
