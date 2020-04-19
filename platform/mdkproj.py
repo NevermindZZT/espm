@@ -86,3 +86,57 @@ class MdkProj(Proj):
             incsNode.text = ";".join(incList)
         tree = ET.ElementTree(project)
         tree.write(self._project, xml_declaration=True)
+
+    def getSrcDir(self):
+        """
+        获取所有源文件的目录
+
+        Returns:
+            
+        """
+        pass
+
+    def getInc(self):
+        """
+        获取所有头文件路径
+
+        Returns:
+            list 头文件路径列表
+        """
+        project = self.__doc.getroot()
+        targets = project.findall("Targets/Target")
+        for target in targets:
+            incsNode = target.find("TargetOption/TargetArmAds/Cads/VariousControls/IncludePath")
+            incList = incsNode.text.split(";")
+            return incList
+        return None
+
+    def getDef(self):
+        """
+        获取所有全局宏
+
+        Returns:
+            list 宏列表
+        """
+        project = self.__doc.getroot()
+        targets = project.findall("Targets/Target")
+        for target in targets:
+            incsNode = target.find("TargetOption/TargetArmAds/Cads/VariousControls/Define")
+            incList = incsNode.text.split(",")
+            return incList
+        return None
+
+    def getOutputFile(self):
+        """
+        获取输出文件
+
+        Returns:
+            str 输出文件
+        """
+        project = self.__doc.getroot()
+        targets = project.findall("Targets/Target")
+        for target in targets:
+            outputDir = target.find("TargetOption/TargetCommonOption/OutputDirectory")
+            outputFileName = target.find("TargetOption/TargetCommonOption/OutputName")
+            return os.path.join(outputDir, outputFileName)
+        return None
