@@ -32,7 +32,7 @@ class Proj():
             packages = []
             self._packages['packages'] = packages
             with open(self._packagesFile, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(self._packages))
+                f.write(json.dumps(self._packages, indent=4))
         else:
             try:
                 with open(self._packagesFile, 'r', encoding='utf-8') as f:
@@ -113,7 +113,7 @@ class Proj():
                     self._packages['packages'].remove(package)
             self._packages['packages'].append(packageInfo)
             with open(self._packagesFile, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(self._packages))
+                f.write(json.dumps(self._packages, indent=4))
 
     def removePackage(self, package):
         """
@@ -133,7 +133,7 @@ class Proj():
             if packageInfo['name'] == package['name']:
                 self._packages['packages'].remove(package)
         with open(self._packagesFile, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(self._packages))
+            f.write(json.dumps(self._packages, indent=4))
 
     def upgrade(self):
         """

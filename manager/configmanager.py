@@ -90,7 +90,7 @@ def updateSource(source=None):
     logging.info("update source form %s", source)
     packages['packages'] = pm.getPackages(source)
     with open(sourceFile, 'w') as f:
-        f.write(json.dumps(packages))
+        f.write(json.dumps(packages, indent=4))
 
 def updateConfig(key, value):
     """
@@ -109,7 +109,7 @@ def updateConfig(key, value):
     configData[key] = value
     configFile = pathmanager.getConfigPath(CONFIG_FILE_NAME)
     with open(configFile, 'w', encoding='utf-8') as f:
-        f.write(json.dumps(configData))
+        f.write(json.dumps(configData, indent=4))
 
 def getConfig(key):
     """
