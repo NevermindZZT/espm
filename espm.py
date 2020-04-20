@@ -34,6 +34,8 @@ def initArgs():
                         help='upgrade project')
     parser.add_argument('-s', '--source', type=str,
                         help='package list source')
+    parser.add_argument('-c', '--config', nargs='+',
+                        help='get or set config')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-l', '--list', action='store_true', help='list all packages')
     group.add_argument('-i', '--install', type=str,
@@ -63,6 +65,11 @@ if __name__ == "__main__":
                 proj = MdkProj(args.project)
             if proj != None:
                 proj.upgrade()
+    elif args.config:
+        if len(args.config) == 1:
+            print("config %s: %s"%(args.config[0], str(cm.getConfig(args.config[0]))))
+        elif len(args.config) > 1:
+            cm.updateConfig(args.config[0], args.config[1])
     elif args.list:
         pm.listPackages()
     elif args.install:

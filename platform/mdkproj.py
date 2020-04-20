@@ -96,7 +96,7 @@ class MdkProj(Proj):
         """
         pass
 
-    def getInc(self):
+    def getIncludePaths(self):
         """
         获取所有头文件路径
 
@@ -111,7 +111,7 @@ class MdkProj(Proj):
             return incList
         return None
 
-    def getDef(self):
+    def getDefines(self):
         """
         获取所有全局宏
 
@@ -121,9 +121,9 @@ class MdkProj(Proj):
         project = self.__doc.getroot()
         targets = project.findall("Targets/Target")
         for target in targets:
-            incsNode = target.find("TargetOption/TargetArmAds/Cads/VariousControls/Define")
-            incList = incsNode.text.split(",")
-            return incList
+            defNode = target.find("TargetOption/TargetArmAds/Cads/VariousControls/Define")
+            defs = defNode.text.split(",")
+            return defs
         return None
 
     def getOutputFile(self):
@@ -136,7 +136,38 @@ class MdkProj(Proj):
         project = self.__doc.getroot()
         targets = project.findall("Targets/Target")
         for target in targets:
-            outputDir = target.find("TargetOption/TargetCommonOption/OutputDirectory")
-            outputFileName = target.find("TargetOption/TargetCommonOption/OutputName")
-            return os.path.join(outputDir, outputFileName)
+            outputDir = target.find("TargetOption/TargetCommonOption/OutputDirectory").text
+            outputFileName = target.find("TargetOption/TargetCommonOption/OutputName").text
+            return os.path.join(outputDir, outputFileName + ".axf")
+        return None
+
+    def getSvdFile(self):
+        """
+        获取SVD文件
+
+        Returns:
+            str SVD文件
+        """
+        project = self.__doc.getroot()
+        targets = project.findall("Targets/Target")
+        for target in targets:
+            packId = target.find("TargetOption/TargetCommonOption/PackID").text
+            dir = '/'.join(packId.split('.', 2))
+            sfdFile = target.find("TargetOption/TargetCommonOption/SFDFile").text
+            splits = sfdFile.split('$')
+            return os.path.join(dir, splits[len(splits) - 1])
+        return None
+
+    def getDeviceName(self):
+        """
+        获取设备名
+
+        Returns:
+            str 设备名
+        """
+        project = self.__doc.getroot()
+        targets = project.findall("Targets/Target")
+        for target in targets:
+            deviceName = target.find("TargetOption/TargetCommonOption/Device").text
+            return deviceName
         return None

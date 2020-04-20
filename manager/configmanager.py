@@ -91,3 +91,37 @@ def updateSource(source=None):
     packages['packages'] = pm.getPackages(source)
     with open(sourceFile, 'w') as f:
         f.write(json.dumps(packages))
+
+def updateConfig(key, value):
+    """
+    更新配置项
+
+    Args:
+        key(str): key
+        value(Any): value
+
+    Returns:
+        `None`
+    """
+    global configData
+    if configData == None:
+        loadConfig()
+    configData[key] = value
+    configFile = pathmanager.getConfigPath(CONFIG_FILE_NAME)
+    with open(configFile, 'w', encoding='utf-8') as f:
+        f.write(json.dumps(configData))
+
+def getConfig(key):
+    """
+    获取配置项
+
+    Args:
+        key(str): key
+
+    Returns:
+        value
+    """
+    global configData
+    if configData == None:
+        loadConfig()
+    return configData[key]
