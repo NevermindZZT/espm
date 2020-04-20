@@ -41,8 +41,9 @@ if __name__ == "__main__":
     args = initArgs()
 
     if args.project and args.directory:
+        directory = args.directory if args.directory else "./"
         code = Code()
-        proj = MdkProj(os.path.join(args.directory, args.project))
+        proj = MdkProj(os.path.join(directory, args.project))
 
         code.addFolder()
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
                 os.path.join("ARM/Packs", proj.getSvdFile())
             ),
             executable=os.path.join(
-                os.path.dirname(os.path.join(args.directory, args.project)), 
+                os.path.dirname(os.path.join(directory, args.project)), 
                 proj.getOutputFile()
             ),
             device=proj.getDeviceName()[:-2]
@@ -66,7 +67,7 @@ if __name__ == "__main__":
                 os.path.join("ARM/Packs", proj.getSvdFile())
                 ),
             executable=os.path.join(
-                os.path.dirname(os.path.join(args.directory, args.project)),
+                os.path.dirname(os.path.join(directory, args.project)),
                 proj.getOutputFile()
             ),
             device=proj.getDeviceName()[:-2]
@@ -93,7 +94,7 @@ if __name__ == "__main__":
             "keroc.hex-fmt"
         ])
 
-        code.save(os.path.join(args.directory, "project" if args.file == None else args.file))
+        code.save(os.path.join(directory, "project" if args.file == None else args.file))
 
         cProperties = Code.CProperties()
         includes = []
@@ -113,4 +114,4 @@ if __name__ == "__main__":
                         + proj.getDefines()
             )
         )
-        cProperties.save(args.directory)
+        cProperties.save(directory)

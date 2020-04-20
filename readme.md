@@ -14,6 +14,7 @@ ESPM支持软件包的添加，更新，删除，支持git和svn，支持对嵌�
   - [源](#源)
   - [软件包](#软件包)
   - [添加软件包](#添加软件包)
+  - [keil2Code](#keil2code)
 
 ## 功能说明
 
@@ -164,3 +165,46 @@ ESPM软件包是一个通过git或者svn进行管理的项目，已有的项目�
 你可以通过Pull Request，修改./data/packages.json，添加你的软件包到ESPM默认源
 
 当然，你也可以自己新建一个软件包源文件，添加你的软件包，然后通过`python espm.py -upate`更新源，如果你想同时使用多个源，只需要在源文件的`source`中添加其他源的url即可
+
+## keil2Code
+
+ESPM提供了一个工具，可以将keil工程配置到VS Code，通过VS Code调用keil进行编译调试，将VS Code作为keil的外部编辑器
+
+1. 安装arm gcc
+
+    下载arm gcc安装并配置好环境变量，使用VS Code进行调试需要用到
+
+2. 配置环境
+
+    配置keil安装路径
+
+    ```sh
+    python espm.py -c keilpath "D:/Program Files (x86)/keil"
+    ```
+
+    配置编译脚本路径(位于./scripts/keilbuild.py)
+
+    ```sh
+    python espm.py -c keilbuild E:/espm/scripts/keilbuild.py
+    ```
+
+3. 导出keil工程到VS Code工作区
+
+    可以选择以绝对路径方式或者相对路径方式导出工作区
+
+    ```sh
+    python keil2code.py -d E:/MDK_project/keilproject -p MDK-ARM/project.uvprojx
+    ```
+
+    其中，`-d`参数表示工程目录，`-p`参数表示keil工程文件遂于工程目录的相对路径
+
+    或者使用相对路径方式
+
+    ```sh
+    cd E:/MDK_project/keilproject
+    python keil2code.py -p MDK-ARM/project.uvprojx
+    ```
+
+4. 打开工程
+
+    打开工程目录下的VS Code工作区文件，根据插件推荐安装必要的插件
