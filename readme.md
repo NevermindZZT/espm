@@ -205,6 +205,8 @@ ESPM提供了一个工具，可以将keil工程配置到VS Code，通过VS Code�
     python keil2code.py -p MDK-ARM/project.uvprojx
     ```
 
+    增加`-e`参数，可以将VS Code的任务从工作区文件中导出到工作目录
+
 4. 打开工程
 
     打开工程目录下的VS Code工作区文件，根据插件推荐安装必要的插件
