@@ -22,10 +22,12 @@ from manager import configmanager as cm
 from platform.mdkproj import MdkProj
 import logging
 
+VERSION = "v0.0.2"
+
 def initArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s version : v0.0.1', help='show the version')
+                        version='%(prog)s version : ' + VERSION, help='show the version')
     parser.add_argument('-p', '--project', type=str, dest='project',
                         help='project file')
     parser.add_argument('-update', '--update', action='store_true',

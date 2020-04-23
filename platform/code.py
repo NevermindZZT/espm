@@ -160,7 +160,7 @@ class Code():
             self.__data['extensions']['recommendations'] = \
                 self.__data['extensions']['recommendations'] + recommendations
 
-    def save(self, file):
+    def save(self, file, export=False, dir="./"):
         """
         保存工作区
 
@@ -170,8 +170,29 @@ class Code():
         Returns:
             `None`
         """
+        tasks = self.__data['tasks']['tasks']
+        if export:
+            self.saveTask(dir)
+            self.__data['tasks']['tasks'] = []
         with open(file + ".code-workspace", 'w') as f:
             f.write(json.dumps(self.__data, indent=4))
+        self.__data['tasks']['tasks'] = tasks
+
+    def saveTask(self, dir):
+        """
+        保存任务
+
+        Args:
+            dir(str): 工作区文件夹
+
+        Returns:
+            `None`
+        """
+        file = os.path.join(dir, ".vscode/tasks.json")
+        if not os.path.exists(os.path.dirname(file)):
+            os.makedirs(os.path.dirname(file))
+        with open(file, 'w') as f:
+            f.write(json.dumps(self.__data['tasks'], indent=4))
 
 
     class Launch(dict):
@@ -199,7 +220,7 @@ class Code():
     class JLinkLaunch(Launch):
 
         def __init__(self,
-                     name='launch',
+                     name='Jlink',
                      cwd='${workspaceRoot}',
                      executable=None, 
                      request='attach', 
@@ -224,7 +245,7 @@ class Code():
     class STLinkLaunch(Launch):
 
         def __init__(self,
-                     name='launch',
+                     name='STLink',
                      cwd='${workspaceRoot}',
                      executable=None, 
                      request='attach', 

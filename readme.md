@@ -1,6 +1,6 @@
 # ESPM (Embedded System Package Manager)
 
-![version](https://img.shields.io/badge/version-0.0.1-brightgreen.svg)
+![version](https://img.shields.io/badge/version-0.0.2-brightgreen.svg)
 ![build](https://img.shields.io/badge/build-2020.04.16-brightgreen.svg)
 ![build](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 

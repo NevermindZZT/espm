@@ -22,25 +22,27 @@ from manager import configmanager as cm
 import sys
 import argparse
 import os
+import espm
 
 
 def initArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s version : v0.0.1', help='show the version')
+                        version='%(prog)s version : ' + espm.VERSION, help='show the version')
     parser.add_argument('-p', '--project', type=str,
                         help='project file')
     parser.add_argument('-d', '--directory', type=str,
                         help='root directory')
     parser.add_argument('-f', '--file', type=str,
-                        help='work space file')
+                        help='work space file') 
+    parser.add_argument('-e', '--export', action='store_true', help='export task')
 
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = initArgs()
 
-    if args.project and args.directory:
+    if args.project:
         directory = args.directory if args.directory else "./"
         code = Code()
         proj = MdkProj(os.path.join(directory, args.project))
@@ -50,11 +52,11 @@ if __name__ == "__main__":
         code.updateSetting("keilpath", cm.getConfig("keilpath"))
         code.updateSetting('uvprojxPath', args.project)
 
+        packPath = os.path.join(cm.getConfig("keilpath"), "ARM/Packs")
+        if not os.path.exists(packPath):
+            packPath = os.path.join(cm.getConfig("keilpath"), "ARM/PACK")
         code.addLaunch(Code.JLinkLaunch(
-            svdFile = os.path.join(
-                cm.getConfig('keilpath'),
-                os.path.join("ARM/Packs", proj.getSvdFile())
-            ),
+            svdFile = os.path.join(packPath, proj.getSvdFile()),
             executable=os.path.join(
                 os.path.dirname(os.path.join(directory, args.project)), 
                 proj.getOutputFile()
@@ -62,10 +64,7 @@ if __name__ == "__main__":
             device=proj.getDeviceName()[:-2]
         ))
         code.addLaunch(Code.STLinkLaunch(
-            svdFile = os.path.join(
-               cm.getConfig('keilpath'),
-                os.path.join("ARM/Packs", proj.getSvdFile())
-                ),
+            svdFile = os.path.join(packPath, proj.getSvdFile()),
             executable=os.path.join(
                 os.path.dirname(os.path.join(directory, args.project)),
                 proj.getOutputFile()
@@ -94,7 +93,9 @@ if __name__ == "__main__":
             "keroc.hex-fmt"
         ])
 
-        code.save(os.path.join(directory, "project" if args.file == None else args.file))
+        code.save(os.path.join(directory, "project" if args.file == None else args.file),
+            export=args.export,
+            dir = directory)
 
         cProperties = Code.CProperties()
         includes = []
