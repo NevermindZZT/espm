@@ -191,8 +191,26 @@ class Code():
         file = os.path.join(dir, ".vscode/tasks.json")
         if not os.path.exists(os.path.dirname(file)):
             os.makedirs(os.path.dirname(file))
+
+        outputTasks = dict(self.__data['tasks'])
+        taskLabels = []
+        for task in outputTasks['tasks']:
+            taskLabels.append(task['label'])
+
+        loadTasks = None
+        if os.path.exists(file):
+            try:
+                with open(file, 'r') as f:
+                    loadTasks = json.loads(f.read())
+            except:
+                pass
+        if loadTasks:
+            for loadTask in loadTasks['tasks']:
+                if loadTask['label'] not in taskLabels:
+                    outputTasks['tasks'].append(loadTask)
+                        
         with open(file, 'w') as f:
-            f.write(json.dumps(self.__data['tasks'], ensure_ascii=False, indent=4))
+            f.write(json.dumps(outputTasks, ensure_ascii=False, indent=4))
 
 
     class Launch(dict):

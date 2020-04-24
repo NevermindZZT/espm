@@ -125,3 +125,16 @@ def getConfig(key):
     if configData == None:
         loadConfig()
     return configData[key]
+
+def getPathConfig(key):
+    """
+    获取路径配置项
+
+    Args:
+        key(str): key
+
+    Returns:
+        value
+    """
+    print(getConfig(key).replace("\\\\", "/").replace("\\", "/"))
+    return getConfig(key).replace("\\\\", "/").replace("\\", "/")

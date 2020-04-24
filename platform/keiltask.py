@@ -29,8 +29,8 @@ class KeilBuildTask(Code.Task):
                          type=type, 
                          command='python', 
                          args=[
-                             cm.getConfig('keilbuild'),
-                             cm.getConfig('keilpath') + '/UV4/UV4.exe',
+                             cm.getPathConfig('keilbuild'),
+                             cm.getPathConfig('keilpath') + '/UV4/UV4.exe',
                              '-r' if rebuild else '-b',
                              r"${config:uvprojxPath}"
                          ], 
@@ -63,8 +63,8 @@ class KeilDownloadTask(Code.Task):
                          type=type, 
                          command='python', 
                          args=[
-                             cm.getConfig('keilbuild'),
-                             cm.getConfig('keilpath') + '/UV4/UV4.exe',
+                             cm.getPathConfig('keilbuild'),
+                             cm.getPathConfig('keilpath') + '/UV4/UV4.exe',
                              '-f',
                              r"${config:uvprojxPath}"
                          ], 
@@ -77,7 +77,7 @@ class KeilOpenTask(Code.Task):
                  type='shell'):
         super().__init__(label=label, 
                          type=type, 
-                         command=cm.getConfig('keilpath') + '/UV4/UV4.exe', 
+                         command=cm.getPathConfig('keilpath') + '/UV4/UV4.exe', 
                          args=[
                              r"${config:uvprojxPath}"
                          ], 

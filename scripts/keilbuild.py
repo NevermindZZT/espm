@@ -39,9 +39,9 @@ def readfile(logfile, path):
 if __name__ == '__main__':
     modulePath = os.path.abspath(os.curdir)
     logfile = modulePath + '/build.log'
-    cmd = '\"D:/Program Files (x86)/keil/UV4/UV4.exe\" '
-    for i in range(1, len(sys.argv)):
-        cmd += sys.argv[i] + ' '
+    cmd = "\"" + sys.argv[1] + "\" "
+    for i in range(2, len(sys.argv)):
+        cmd += sys.argv[i] + " "
     cmd += '-j0 -o ' + logfile
     thread = threading.Thread(target=readfile, args=(logfile, os.path.dirname(sys.argv[3])))
     thread.start()

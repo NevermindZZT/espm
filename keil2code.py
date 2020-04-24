@@ -49,12 +49,12 @@ if __name__ == "__main__":
 
         code.addFolder()
 
-        code.updateSetting("keilpath", cm.getConfig("keilpath"))
+        code.updateSetting("keilpath", cm.getPathConfig("keilpath"))
         code.updateSetting('uvprojxPath', args.project)
 
-        packPath = os.path.join(cm.getConfig("keilpath"), "ARM/Packs")
+        packPath = os.path.join(cm.getPathConfig("keilpath"), "ARM/Packs")
         if not os.path.exists(packPath):
-            packPath = os.path.join(cm.getConfig("keilpath"), "ARM/PACK")
+            packPath = os.path.join(cm.getPathConfig("keilpath"), "ARM/PACK")
         code.addLaunch(Code.JLinkLaunch(
             svdFile = os.path.join(packPath, proj.getSvdFile()),
             executable=os.path.join(
@@ -111,7 +111,7 @@ if __name__ == "__main__":
             Code.CProperties.Configuration(
                 name='stm32',
                 includePath=[
-                    cm.getConfig('keilpath') + "/ARM/ARMCC/**",
+                    cm.getPathConfig('keilpath') + "/ARM/ARMCC/**",
                     "${workspaceFolder}/**"
                 ] + includes,
                 defines=Code.CProperties.Configuration.getDefaultDefines()

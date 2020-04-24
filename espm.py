@@ -22,7 +22,7 @@ from manager import configmanager as cm
 from platform.mdkproj import MdkProj
 import logging
 
-VERSION = "v0.0.2"
+VERSION = "v0.0.3"
 
 def initArgs():
     parser = argparse.ArgumentParser()

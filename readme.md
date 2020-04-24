@@ -1,7 +1,7 @@
 # ESPM (Embedded System Package Manager)
 
-![version](https://img.shields.io/badge/version-0.0.2-brightgreen.svg)
-![build](https://img.shields.io/badge/build-2020.04.16-brightgreen.svg)
+![version](https://img.shields.io/badge/version-0.0.3-brightgreen.svg)
+![build](https://img.shields.io/badge/build-2020.04.24-brightgreen.svg)
 ![build](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 
 Embedded System Package Manager(嵌入式系统包管理工具) 是一个用于嵌入式系统开发情况，对各种通用模块(软件包)进行管理的工具
