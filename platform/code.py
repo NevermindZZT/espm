@@ -175,7 +175,7 @@ class Code():
             self.saveTask(dir)
             self.__data['tasks']['tasks'] = []
         with open(file + ".code-workspace", 'w') as f:
-            f.write(json.dumps(self.__data, indent=4))
+            f.write(json.dumps(self.__data, ensure_ascii=False, indent=4))
         self.__data['tasks']['tasks'] = tasks
 
     def saveTask(self, dir):
@@ -192,7 +192,7 @@ class Code():
         if not os.path.exists(os.path.dirname(file)):
             os.makedirs(os.path.dirname(file))
         with open(file, 'w') as f:
-            f.write(json.dumps(self.__data['tasks'], indent=4))
+            f.write(json.dumps(self.__data['tasks'], ensure_ascii=False, indent=4))
 
 
     class Launch(dict):
@@ -325,7 +325,7 @@ class Code():
             if not os.path.exists(os.path.dirname(file)):
                 os.makedirs(os.path.dirname(file))
             with open(file, 'w') as f:
-                f.write(json.dumps(self.__data, indent=4))
+                f.write(json.dumps(self.__data, ensure_ascii=False, indent=4))
 
         class Configuration(dict):
 

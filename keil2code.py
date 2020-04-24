@@ -73,15 +73,15 @@ if __name__ == "__main__":
         ))
 
         code.addTask(KeilBuildTask(
-            fileLocation=os.path.join(r"${workspaceFolder}", os.path.dirname(args.project))
-        ))
-        code.addTask(KeilBuildTask(
-            label='rebuild',
-            rebuild=True,
-            fileLocation=os.path.join(r"${workspaceFolder}", os.path.dirname(args.project))
+            fileLocation=r"${workspaceFolder}"
         ))
         code.addTask(KeilDownloadTask())
         code.addTask(KeilOpenTask())
+        code.addTask(KeilBuildTask(
+            label='rebuild',
+            rebuild=True,
+            fileLocation=r"${workspaceFolder}"
+        ))
 
         code.addRecommendations([
             "dan-c-underwood.arm",
@@ -101,9 +101,12 @@ if __name__ == "__main__":
         includes = []
         for item in proj.getIncludePaths():
             if item.startswith("."):
-                includes.append(os.path.join(os.path.dirname(args.project), item))
+                path = os.path.join(os.path.dirname(args.project), item)
+                if os.path.exists(os.path.join(directory, path)):
+                    includes.append(path)
             else:
-                includes.append(item)
+                if os.path.exists(item):
+                    includes.append(item)
         cProperties.addConfiguration(
             Code.CProperties.Configuration(
                 name='stm32',
