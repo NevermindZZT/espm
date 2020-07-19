@@ -29,9 +29,10 @@ DEFAULT_CONFIG = r"""{
 """
 
 def mkConfigDir():
-    configDir = os.path.dirname(pathmanager.getEspmPath(pathmanager.PATH_CONFIG))
+    configDir = pathmanager.getEspmPath(pathmanager.PATH_CONFIG)
     if not os.path.exists(configDir):
-        os.mkdir(configDir)
+        print("generate espm directory: %s"%configDir)
+        os.makedirs(configDir)
 
 
 def loadConfig():
