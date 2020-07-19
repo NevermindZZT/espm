@@ -117,13 +117,13 @@ def getPackageInfo(packageName):
             package = search(packageName)
             if packageInfo == None:
                 packageInfo = package
-            elif not 'src' in packageInfo or not 'inc' in packageInfo:
-                if not 'src' in packageInfo and 'src' in package:
-                    packageInfo['src'] = package['src']
-                if not 'inc' in packageInfo and 'inc' in package:
-                    packageInfo['inc'] = package['inc']
-                if not 'version' in packageInfo:
-                    packageInfo['version'] = "unknow"
+
+            if not 'src' in packageInfo and 'src' in package:
+                packageInfo['src'] = package['src']
+            if not 'inc' in packageInfo and 'inc' in package:
+                packageInfo['inc'] = package['inc']
+            if not 'version' in packageInfo:
+                packageInfo['version'] = "unknow" if not 'version' in package else package['version']
 
     return packageInfo
                         
